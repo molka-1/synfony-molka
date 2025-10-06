@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des auteurs{% endblock %}
+
+{% block body %}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f9fa;
+        color: #5d4037;
+        margin: 0;
+        padding: 20px;
+    }
+    h1 {
+        text-align: center;
+        color: #5d4037;
+        margin-bottom: 30px;
+        font-size: 1.8em;
+    }
+    .stats {
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 1em;
+        color: #8d6e63;
+    }
+    table {
+        width: 80%; /* Tableau plus petit */
+        margin: auto;
+        border-collapse: collapse;
+        background-color: white;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        border-radius: 6px;
+        overflow: hidden;
+        border: 2px solid #d7ccc8;
+        font-size: 0.9em; /* Texte plus petit */
+    }
+    th, td {
+        padding: 10px; /* Padding réduit */
+        text-align: center;
+        border-bottom: 2px solid #d7ccc8;
+        border-right: 1px solid #d7ccc8;
+    }
+    th {
+        background-color: #6d4c41;
+        color: white;
+        font-weight: bold;
+        border-bottom: 3px solid #5d4037;
+        padding: 12px 10px; /* Padding header réduit */
+    }
+    th:last-child, td:last-child {
+        border-right: none;
+    }
+    tr:hover {
+        background-color: #f5f5f5;
+    }
+    /* Photo rectangulaire plus petite */
+    .rectangle-photo {
+        width: 60px; /* Réduit de 80px */
+        height: 45px; /* Réduit de 60px */
+        object-fit: cover;
+        border: 2px solid #bcaaa4;
+        border-radius: 4px;
+    }
+    .details-btn {
+        padding: 6px 12px; /* Bouton plus petit */
+        background-color: #8d6e63;
+        color: white;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        font-size: 0.85em;
+    }
+    .details-btn:hover {
+        background-color: #6d4c41;
+    }
+</style>
+
+<h1>Liste des auteurs</h1>
+
+{% if authors is defined and authors|length > 0 %}
+    <div class="stats">
+        Nombre d'auteurs : <strong>{{ authors|length }}</strong> | 
+        Nombre total de livres : <strong>{{ totalBooks }}</strong>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Photo</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Livres</th>
+                <th>Détails</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for author in authors %}
+                <tr>
+                    <td><img src="{{ asset(author.picture) }}" alt="{{ author.username }}" class="rectangle-photo"></td>
+                    <td><strong>{{ author.username|upper }}</strong></td>
+                    <td>{{ author.email }}</td>
+                    <td>{{ author.nb_books }}</td>
+                    <td>
+                        <a href="{{ path('app_author_details_by_id', {'id': author.id}) }}" class="details-btn">Voir</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p style="text-align:center; color: #8d6e63;">Aucun auteur trouvé.</p>
+{% endif %}
+{% endblock %}
