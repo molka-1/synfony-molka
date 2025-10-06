@@ -1,0 +1,25 @@
+{% block body %}
+<body style="background-color:white;">
+<h1>Liste des utilisateurs</h1>
+
+<table border="1" cellpadding="8" style="background-color:white;">
+    <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Âge</th>
+    </tr>
+
+    {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.age is not null ? user.age : 'N/A' }}</td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="3">Aucun utilisateur trouvé.</td>
+        </tr>
+    {% endfor %}
+</table>
+</body>
+{% endblock %}
