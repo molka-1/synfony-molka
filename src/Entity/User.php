@@ -19,6 +19,13 @@ class User
     #[ORM\Column(type: 'integer', nullable: true)]
     private ?int $age = null;
 
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Classroom $classroom = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $no = null;
+
     // ----------------------------
     // Getters and Setters
     // ----------------------------
@@ -47,6 +54,30 @@ class User
     public function setAge(?int $age): self
     {
         $this->age = $age;
+        return $this;
+    }
+
+    public function getClassroom(): ?Classroom
+    {
+        return $this->classroom;
+    }
+
+    public function setClassroom(?Classroom $classroom): static
+    {
+        $this->classroom = $classroom;
+
+        return $this;
+    }
+
+    public function getNo(): ?string
+    {
+        return $this->no;
+    }
+
+    public function setNo(string $no): static
+    {
+        $this->no = $no;
+
         return $this;
     }
 }
